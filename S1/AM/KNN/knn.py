@@ -47,47 +47,51 @@ def load_iris_dataset():
     y = iris.data.targets 
     return X, y
 
-# Carregar o conjunto de dados e dividir em conjuntos de treinamento e teste
-X, y = load_iris_dataset()
-X_train, X_test, y_train, y_test = train_test_split(X.values, y.values, test_size=0.2, random_state=42)
+def plot_accuracy(X_train, X_test, y_train, y_test):
+    import matplotlib.pyplot as plt
+    import matplotlib 
 
-# Inicializar e treinar o classificador k-NN
-knn = KNN(k=3)
-knn.fit(X_train, y_train.ravel())
+    matplotlib.use('qtagg')
 
-# Fazer previsões no conjunto de teste
-y_pred = knn.predict(X_test)
+    # Lista para armazenar as precisões para cada valor de k
+    accuracies = []
 
-# Calcular a precisão do modelo
-def accuracy_score(y_true, y_pred):
-    accuracy = np.sum(y_true == y_pred) / len(y_true)
-    return accuracy
+    # Valores de k para testar
+    k_values = range(1, 10)
 
-accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy)
+    for k in k_values:
+        knn = KNN(k=k)
+        knn.fit(X_train, y_train.ravel())
+        y_pred = knn.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        accuracies.append(accuracy)
 
+    # Criar o gráfico
+    plt.plot(k_values, accuracies)
+    plt.xlabel('k')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy for different values of k')
+    plt.show()
 
-import matplotlib.pyplot as plt
-import matplotlib 
+if __name__=='__main__':
 
-matplotlib.use('qtagg')
+    # Carregar o conjunto de dados e dividir em conjuntos de treinamento e teste
+    X, y = load_iris_dataset()
+    X_train, X_test, y_train, y_test = train_test_split(X.values, y.values, test_size=0.2, random_state=42)
 
-# Lista para armazenar as precisões para cada valor de k
-accuracies = []
-
-# Valores de k para testar
-k_values = range(1, 10)
-
-for k in k_values:
-    knn = KNN(k=k)
+    # Inicializar e treinar o classificador k-NN
+    knn = KNN(k=3)
     knn.fit(X_train, y_train.ravel())
-    y_pred = knn.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    accuracies.append(accuracy)
 
-# Criar o gráfico
-plt.plot(k_values, accuracies)
-plt.xlabel('k')
-plt.ylabel('Accuracy')
-plt.title('Accuracy for different values of k')
-plt.show()
+    # Fazer previsões no conjunto de teste
+    y_pred = knn.predict(X_test)
+
+    # Calcular a precisão do modelo
+    def accuracy_score(y_true, y_pred):
+        accuracy = np.sum(y_true == y_pred) / len(y_true)
+        return accuracy
+
+    accuracy = accuracy_score(y_test, y_pred)
+    print("Accuracy:", accuracy)
+
+    plot_accuracy(X_train, X_test, y_train, y_test)
