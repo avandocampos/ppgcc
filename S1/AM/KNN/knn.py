@@ -1,5 +1,5 @@
-from ucimlrepo import fetch_ucirepo 
 import numpy as np
+from ucimlrepo import fetch_ucirepo 
 from collections import Counter
 
 # Função para calcular a distância euclidiana entre dois pontos
@@ -10,10 +10,12 @@ def euclidean_distance(x1, x2):
 def train_test_split(X, y, test_size=0.2, random_state=None):
     if random_state:
         np.random.seed(random_state)
+    
     shuffled_indices = np.random.permutation(len(y))
     test_set_size = int(len(y) * test_size)
     test_indices = shuffled_indices[:test_set_size]
     train_indices = shuffled_indices[test_set_size:]
+    
     return X[train_indices], X[test_indices], y[train_indices], y[test_indices]
 
 # Implementação do k-NN
@@ -45,6 +47,7 @@ def load_iris_dataset():
     iris = fetch_ucirepo(id=53)
     X = iris.data.features 
     y = iris.data.targets 
+    
     return X, y
 
 def plot_accuracy(X_train, X_test, y_train, y_test):
