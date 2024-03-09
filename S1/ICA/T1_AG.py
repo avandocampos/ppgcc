@@ -49,10 +49,9 @@ def calculate_fitness(horario):
             professor, sala, horario = aula
             if horario not in professores_por_horario:
                 professores_por_horario[horario] = set()
-            if professor in professores_por_horario[horario]:
+            professores_por_horario[horario].add(professor)
+            if len(professores_por_horario[horario]) != 1:
                 score -= 10  # Penalidade por conflito de horário
-            else:
-                professores_por_horario[horario].add(professor)
 
     # Verificar distribuição das aulas
     aulas_por_dia = [len(dia) for dia in horario]
@@ -86,6 +85,15 @@ def mutation(individuo):
     individuo[indice1][indice2][2] = random.choice(horarios)
     return individuo
 
+# Função para imprimir um horário formatado
+def print_schedule(schedule):
+    for i, day in enumerate(schedule):
+        print(f"Day {dias_semana[i]}:")
+        for lesson in day:
+            professor, room, time = lesson
+            print(f"  Time: {time}, Professor: {professor}, Room: {room}")
+        print()
+
 
 if __name__ == "__main__":
     print("Algoritmo genético para alocação de salas")
@@ -93,7 +101,7 @@ if __name__ == "__main__":
     # Parâmetros do algoritmo genético
     tamanho_populacao = 10
     tamanho_torneio = 3
-    numero_geracoes = 100
+    numero_geracoes = 1000
     
     # Criar população inicial
     populacao = create_initial_population(tamanho_populacao)
@@ -119,8 +127,6 @@ if __name__ == "__main__":
     # Encontrar e imprimir a melhor solução encontrada
     melhor_horario = min(populacao, key=calculate_fitness)
     print("Melhor horário encontrado:")
-    for dia, aulas_dia in zip(dias_semana, melhor_horario):
-        print(dia)
-        for aula in aulas_dia:
-            print(f"Professor: {aula[0]}, Sala: {aula[1]}, Horário: {aula[2]}")
+    best_schedule = min(populacao, key=calculate_fitness)
+    print_schedule(best_schedule)
     
