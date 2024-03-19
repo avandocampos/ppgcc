@@ -3,15 +3,16 @@ import random
 # Problem parameters
 NUM_SUBJECTS = 11
 NUM_OFFERED = 6  # Number of subjects to be offered
-SUBJECT_WEIGHTS = [5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1]  # Subject weights
-POP_SIZE = 10
-GEN_SIZE = 50
+SUBJECT_WEIGHTS = [5, 4, 3, 3, 2, 2, 1, 1, 1, 1, 1]  # Subject weights
+POP_SIZE = 100
+GEN_SIZE = 1000
 MUTATION_RATE = 0.1
 
 # Dictionary to map subject numbers to their identifiers
 subject_id = {
-    1: "TC",
-    2: "SIG",
+    0: "TC",
+    1: "SIG",
+    2: "AM",
     3: "SD",
     4: "RA",
     5: "PI",
@@ -19,8 +20,7 @@ subject_id = {
     7: "MSH",
     8: "ICA",
     9: "ASE",
-    10: "AP",
-    11: "AM"
+    10: "AP"
 }
 
 # Function to initialize the population randomly respecting the number of offered subjects
@@ -29,18 +29,24 @@ def initialize_population():
     for _ in range(POP_SIZE):
         individual = random.sample(range(NUM_SUBJECTS), NUM_OFFERED)
         population.append(individual)
+    
     return population
 
 # Function to calculate the fitness of an individual
 def calculate_fitness(individual):
     total_weight = sum(SUBJECT_WEIGHTS[subject] for subject in individual)
+    
+    # Penalize individuals with repeated subjects
+    if len(set(individual)) < NUM_OFFERED:
+        total_weight -= 100  # Apply a penalty of 100 for each repeated subject
+    
     return total_weight
 
 # Function to perform parent selection by tournament
 def select_parents(population):
     parents = []
     for _ in range(len(population)):
-        tournament = random.sample(population, 5)
+        tournament = random.sample(population, 10)
         winner = max(tournament, key=calculate_fitness)
         parents.append(winner)
     return parents
