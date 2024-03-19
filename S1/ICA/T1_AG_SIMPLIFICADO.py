@@ -23,24 +23,27 @@ subject_id = {
     10: "AP"
 }
 
+
 # Function to initialize the population randomly respecting the number of offered subjects
 def initialize_population():
     population = []
     for _ in range(POP_SIZE):
         individual = random.sample(range(NUM_SUBJECTS), NUM_OFFERED)
         population.append(individual)
-    
+
     return population
+
 
 # Function to calculate the fitness of an individual
 def calculate_fitness(individual):
     total_weight = sum(SUBJECT_WEIGHTS[subject] for subject in individual)
-    
+
     # Penalize individuals with repeated subjects
     if len(set(individual)) < NUM_OFFERED:
         total_weight -= 100  # Apply a penalty of 100 for each repeated subject
-    
+
     return total_weight
+
 
 # Function to perform parent selection by tournament
 def select_parents(population):
@@ -51,6 +54,7 @@ def select_parents(population):
         parents.append(winner)
     return parents
 
+
 # Function to perform crossover between two parents
 def crossover(parent1, parent2):
     point = random.randint(1, NUM_OFFERED - 1)
@@ -58,11 +62,13 @@ def crossover(parent1, parent2):
     child2 = parent2[:point] + parent1[point:]
     return child1, child2
 
+
 # Function to perform mutation of an individual
 def mutate(individual):
     if random.random() < MUTATION_RATE:
         index = random.randint(0, NUM_OFFERED - 1)
         individual[index] = random.randint(0, NUM_SUBJECTS - 1)
+
 
 # Main genetic algorithm function
 def genetic_algorithm():
@@ -88,6 +94,7 @@ def genetic_algorithm():
     for subject in best_solution:
         print(f"{subject_id[subject]} - Weight: {SUBJECT_WEIGHTS[subject]}")
     print("Fitness of the best solution:", best_fitness)
+
 
 if __name__ == "__main__":
     genetic_algorithm()
