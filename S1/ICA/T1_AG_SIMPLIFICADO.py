@@ -1,15 +1,15 @@
 import random
 
-# Parâmetros do problema
-NUM_DISCIPLINAS = 11
-NUM_OFERTADAS = 6  # Número de disciplinas a serem ofertadas
-PESOS_DISCIPLINAS = [5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1]  # Pesos das disciplinas
+# Problem parameters
+NUM_SUBJECTS = 11
+NUM_OFFERED = 6  # Number of subjects to be offered
+SUBJECT_WEIGHTS = [5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1]  # Subject weights
 POP_SIZE = 10
 GEN_SIZE = 50
 MUTATION_RATE = 0.1
 
-# Dicionário para vincular o número da disciplina ao seu identificador
-disciplina_id = {
+# Dictionary to map subject numbers to their identifiers
+subject_id = {
     1: "TC",
     2: "SIG",
     3: "SD",
@@ -23,20 +23,20 @@ disciplina_id = {
     11: "AM"
 }
 
-# Função para inicializar a população aleatoriamente respeitando o número de disciplinas ofertadas
+# Function to initialize the population randomly respecting the number of offered subjects
 def initialize_population():
     population = []
     for _ in range(POP_SIZE):
-        individuo = random.sample(range(NUM_DISCIPLINAS), NUM_OFERTADAS)
-        population.append(individuo)
+        individual = random.sample(range(NUM_SUBJECTS), NUM_OFFERED)
+        population.append(individual)
     return population
 
-# Função para calcular o fitness de um indivíduo
+# Function to calculate the fitness of an individual
 def calculate_fitness(individual):
-    total_peso = sum(PESOS_DISCIPLINAS[disciplina] for disciplina in individual)
-    return total_peso
+    total_weight = sum(SUBJECT_WEIGHTS[subject] for subject in individual)
+    return total_weight
 
-# Função para realizar a seleção de pais por torneio
+# Function to perform parent selection by tournament
 def select_parents(population):
     parents = []
     for _ in range(len(population)):
@@ -45,20 +45,20 @@ def select_parents(population):
         parents.append(winner)
     return parents
 
-# Função para realizar o crossover entre dois pais
+# Function to perform crossover between two parents
 def crossover(parent1, parent2):
-    point = random.randint(1, NUM_OFERTADAS - 1)
+    point = random.randint(1, NUM_OFFERED - 1)
     child1 = parent1[:point] + parent2[point:]
     child2 = parent2[:point] + parent1[point:]
     return child1, child2
 
-# Função para realizar a mutação de um indivíduo
+# Function to perform mutation of an individual
 def mutate(individual):
     if random.random() < MUTATION_RATE:
-        index = random.randint(0, NUM_OFERTADAS - 1)
-        individual[index] = random.randint(0, NUM_DISCIPLINAS - 1)
+        index = random.randint(0, NUM_OFFERED - 1)
+        individual[index] = random.randint(0, NUM_SUBJECTS - 1)
 
-# Função principal do algoritmo genético
+# Main genetic algorithm function
 def genetic_algorithm():
     population = initialize_population()
 
@@ -78,10 +78,10 @@ def genetic_algorithm():
     best_solution = max(population, key=calculate_fitness)
     best_fitness = calculate_fitness(best_solution)
 
-    print("Melhor solução encontrada:")
-    for disciplina in best_solution:
-        print(f"{disciplina_id[disciplina]} - Peso: {PESOS_DISCIPLINAS[disciplina]}")
-    print("Fitness da melhor solução:", best_fitness)
+    print("Best solution found:")
+    for subject in best_solution:
+        print(f"{subject_id[subject]} - Weight: {SUBJECT_WEIGHTS[subject]}")
+    print("Fitness of the best solution:", best_fitness)
 
 if __name__ == "__main__":
     genetic_algorithm()
