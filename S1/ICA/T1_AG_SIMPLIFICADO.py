@@ -1,15 +1,27 @@
 import random
 
 # Parâmetros do problema
-NUM_DISCIPLINAS = 15
-NUM_OFERTADAS = 10  # Número de disciplinas a serem ofertadas
-PESOS_DISCIPLINAS = [3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  # Pesos das disciplinas
-POP_SIZE = 100
+NUM_DISCIPLINAS = 11
+NUM_OFERTADAS = 6  # Número de disciplinas a serem ofertadas
+PESOS_DISCIPLINAS = [5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1]  # Pesos das disciplinas
+POP_SIZE = 10
 GEN_SIZE = 50
 MUTATION_RATE = 0.1
 
 # Dicionário para vincular o número da disciplina ao seu identificador
-disciplina_id = {i: f"Disciplina {i+1}" for i in range(NUM_DISCIPLINAS)}
+disciplina_id = {
+    1: "TC",
+    2: "SIG",
+    3: "SD",
+    4: "RA",
+    5: "PI",
+    6: "PAD",
+    7: "MSH",
+    8: "ICA",
+    9: "ASE",
+    10: "AP",
+    11: "AM"
+}
 
 # Função para inicializar a população aleatoriamente respeitando o número de disciplinas ofertadas
 def initialize_population():
