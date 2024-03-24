@@ -19,3 +19,7 @@ build/
 # Virtual environment directory
 venv/
 env/
+
+# Image files
+*.png
+*.jpg
