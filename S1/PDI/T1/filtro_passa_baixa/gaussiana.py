@@ -23,5 +23,5 @@ def low_pass_filter_gaussian(image, kernel_size):
 if __name__ == '__main__':
 
     image = cv2.imread('imagem.jpeg', 0)  # Load image in grayscale
-    filtered_image_gaussian = gaussian_filter(image, 5)  # Apply filter with 5x5 kernel
+    filtered_image_gaussian = low_pass_filter_gaussian(image, 5)  # Apply filter with 5x5 kernel
     cv2.imwrite('filtered_image_gaussian.jpeg', filtered_image_gaussian)
