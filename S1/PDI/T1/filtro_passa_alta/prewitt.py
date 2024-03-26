@@ -2,17 +2,17 @@ import cv2
 import numpy as np
 
 
-def high_pass_sobel_filter(image):
+def high_pass_prewitt_filter(image):
     height, width = image.shape
     filtered_image = image.copy().astype(float)
-    sobel_kernel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
-    sobel_kernel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
+    prewitt_kernel_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
+    prewitt_kernel_y = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
 
     for y in range(1, height - 1):
         for x in range(1, width - 1):
             sub_image = image[y - 1:y + 2, x - 1:x + 2]
-            gx = np.sum(sub_image * sobel_kernel_x)
-            gy = np.sum(sub_image * sobel_kernel_y)
+            gx = np.sum(sub_image * prewitt_kernel_x)
+            gy = np.sum(sub_image * prewitt_kernel_y)
             filtered_image[y, x] = np.sqrt(gx**2 + gy**2)
 
     # Normalize the image to the range 0-255
@@ -25,5 +25,5 @@ def high_pass_sobel_filter(image):
 if __name__ == '__main__':
 
     image = cv2.imread('images/sample.jpeg', 0)  # Load image in grayscale
-    filtered_image_sobel = high_pass_sobel_filter(image)  # Apply filter
-    cv2.imwrite('images/filtered_image_sobel.jpeg', filtered_image_sobel)
+    filtered_image_prewitt = high_pass_prewitt_filter(image)  # Apply filter
+    cv2.imwrite('images/filtered_image_prewitt.jpeg', filtered_image_prewitt)
