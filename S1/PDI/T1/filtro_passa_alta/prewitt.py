@@ -24,6 +24,6 @@ def high_pass_prewitt_filter(image):
 
 if __name__ == '__main__':
 
-    image = cv2.imread('images/sample.jpeg', 0)  # Load image in grayscale
+    image = cv2.imread('images/sample.jpg', 0)  # Load image in grayscale
     filtered_image_prewitt = high_pass_prewitt_filter(image)  # Apply filter
-    cv2.imwrite('images/filtered_image_prewitt.jpeg', filtered_image_prewitt)
+    cv2.imwrite('images/filtered_image_prewitt.jpg', filtered_image_prewitt)

@@ -17,6 +17,6 @@ def low_pass_filter_median(image, kernel_size):
 
 if __name__ == '__main__':
 
-    image = cv2.imread('imagem.jpeg', 0)  # Load image in grayscale
+    image = cv2.imread('images/sample.jpg', 0)  # Load image in grayscale
     filtered_image_median = low_pass_filter_median(image, 5)  # Apply filter with 5x5 kernel
-    cv2.imwrite('filtered_image_median.jpeg', filtered_image_median)
+    cv2.imwrite('images/filtered_image_median.jpg', filtered_image_median)

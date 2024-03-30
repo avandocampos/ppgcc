@@ -24,6 +24,6 @@ def high_pass_sobel_filter(image):
 
 if __name__ == '__main__':
 
-    image = cv2.imread('images/sample.jpeg', 0)  # Load image in grayscale
+    image = cv2.imread('images/sample.jpg', 0)  # Load image in grayscale
     filtered_image_sobel = high_pass_sobel_filter(image)  # Apply filter
-    cv2.imwrite('images/filtered_image_sobel.jpeg', filtered_image_sobel)
+    cv2.imwrite('images/filtered_image_sobel.jpg', filtered_image_sobel)

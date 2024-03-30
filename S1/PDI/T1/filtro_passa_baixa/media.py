@@ -18,6 +18,6 @@ def low_pass_filter_average(image, kernel_size):
 
 if __name__ == '__main__':
 
-    image = cv2.imread('imagem.jpeg', 0)  # Load image in grayscale
+    image = cv2.imread('images/sample.jpg', 0)  # Load image in grayscale
     filtered_image_average = low_pass_filter_average(image, 5)  # Apply filter with 5x5 kernel
-    cv2.imwrite('filtered_image_average.jpeg', filtered_image_average)
+    cv2.imwrite('images/filtered_image_average.jpg', filtered_image_average)
