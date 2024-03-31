@@ -24,3 +24,10 @@ env/
 *.png
 *.jpg
 *.jpeg
+
+# Dataset files
+*.arff
+*.dat
+
+# Compacted files
+*.zip
