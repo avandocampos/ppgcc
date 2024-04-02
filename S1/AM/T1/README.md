@@ -40,4 +40,4 @@ O projeto está organizado da seguinte forma:
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE para obter mais detalhes.
+Este projeto está licenciado sob a Licença Apache 2.0. Consulte o arquivo LICENSE para obter mais detalhes.
