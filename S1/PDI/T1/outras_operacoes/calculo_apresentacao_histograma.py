@@ -1,9 +1,12 @@
-import cv2
+import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
 
 
 def calculate_histogram(image):
-    histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+    histogram = np.zeros(256)
+    for pixel in image.ravel():
+        histogram[pixel] += 1
     return histogram
 
 
@@ -19,6 +22,7 @@ def display_histogram(histogram):
 
 if __name__ == '__main__':
 
-    image = cv2.imread('images/sample.jpg', 0)  # Load image in grayscale
+    image = Image.open('images/sample.jpg').convert('L')  # Load image in grayscale
+    image = np.array(image)
     histogram = calculate_histogram(image)  # Calculate histogram
     display_histogram(histogram)  # Display histogram
