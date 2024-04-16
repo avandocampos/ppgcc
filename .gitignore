@@ -31,3 +31,9 @@ env/
 
 # Compacted files
 *.zip
+
+# VSCode files and directories
+.vscode
+
+#Other files extensions
+*.data
