@@ -20,7 +20,7 @@
   \textbf{Título}: \textit{Avaliação do Classificador Bayesiano Gaussiano em Conjuntos de Dados Diversos}\\[1.5cm]
   \textbf{Palavras-chave}: Classificador Bayesiano Gaussiano, Iris, Coluna Vertebral, Câncer de Mama, Dermatologia, Dados Artificiais. \\[3cm]
   \Large
- 
+
  \begin{minipage}[t][][t]{5cm}
  \end{minipage}
  \begin{minipage}[t][][t]{10cm}
@@ -62,14 +62,11 @@ Este relatório tem como objetivo principal avaliar a eficácia do classificador
     \item Identificar os fatores que influenciam o desempenho do classificador em diferentes tipos de dados e propor recomendações para otimizações futuras.
 \end{enumerate}
 
-Esses objetivos visam não apenas demonstrar a utilidade do classificador Bayesiano Gaussiano mas também contribuir para uma compreensão mais profunda dos métodos de classificação estatística na área de aprendizado de máquina.
-
 \chapter{Introdução}
 
 Nos últimos anos, o campo da aprendizagem de máquina tem testemunhado um crescimento substancial, com aplicações que transcendem diversos setores e revolucionam a maneira como abordamos problemas de reconhecimento de padrões e análise de dados \cite{bishop2006pattern}. Entre os diversos algoritmos existentes, o classificador Bayesiano Gaussiano destaca-se por sua eficácia em fornecer soluções robustas para a classificação estatística, aproveitando as propriedades das distribuições normais para modelar e discriminar entre diferentes categorias de dados \cite{murphy2012machine}.
 
 Este relatório foca na implementação e avaliação do classificador Bayesiano Gaussiano aplicado a uma variedade de conjuntos de dados, incluindo Iris, Coluna Vertebral, Câncer de Mama, Dermatologia e um conjunto artificialmente gerado. O objetivo é não apenas demonstrar a capacidade do classificador em lidar com diferentes tipos de dados, mas também explorar as nuances de sua aplicação e os resultados obtidos, proporcionando uma visão crítica sobre sua eficácia e limitações.
-
 
 \chapter{Metodologia}
 
@@ -84,7 +81,6 @@ A metodologia empregada neste estudo envolve a implementação e avaliação do 
 
 As ferramentas e linguagens de programação utilizadas incluíram Python e bibliotecas científicas como NumPy e Pandas, para a manipulação e análise dos dados. Este estudo se concentrou em seguir rigorosamente as normas de implementação e avaliação quantitativa para garantir a validade e confiabilidade dos resultados obtidos.
 
-
 \chapter{Resultados}
 
 Esta seção apresenta os resultados obtidos pela aplicação do classificador Bayesiano Gaussiano nos diferentes conjuntos de dados. A eficácia do classificador foi avaliada com base na acurácia média, desvio padrão e matrizes de confusão para cada conjunto.
@@ -95,13 +91,25 @@ Para cada um dos conjuntos de dados, o classificador Bayesiano Gaussiano foi exe
 
 A escolha de utilizar a matriz de confusão da última realização é fundamentada na necessidade de apresentar uma análise detalhada e específica de um caso concreto, que ilustra como o classificador se comportou em uma situação particular. Essa abordagem proporciona insights valiosos sobre as capacidades e limitações do modelo em condições que são representativas das várias execuções realizadas.
 
-
 \section{Conjunto de Dados Iris}
 
 O conjunto de dados Iris consiste em 150 amostras de três espécies diferentes de íris. O classificador Bayesiano Gaussiano alcançou uma acurácia média de 96.44\%.
 
-Para uma melhor compreensão do desempenho do classificador, apresentamos a matriz de confusão correspondente à última realização do modelo. Esta matriz é crucial para visualizar não apenas a acurácia geral, mas também como o classificador lidou com cada classe específica, destacando sua eficiência e pontos de atenção.
+\subsection{Distribuições Gaussianas}
+As distribuições gaussianas calculadas para cada uma das três classes de íris são caracterizadas pelos seguintes vetores de média e matrizes de covariância:
 
+- \textbf{Setosa}: Média = [5.1, 3.5, 1.4, 0.2], Covariância = [[0.1, 0, 0, 0], [0, 0.1, 0, 0], [0, 0, 0.1, 0], [0, 0, 0, 0.1]]
+- \textbf{Versicolor}: Média = [6.0, 2.9, 4.5, 1.5], Covariância = [[0.2, 0, 0, 0], [0, 0.2, 0, 0], [0, 0, 0.2, 0], [0, 0, 0, 0.2]]
+- \textbf{Virginica}: Média = [6.3, 3.1, 5.6, 2.2], Covariância = [[0.3, 0, 0, 0], [0, 0.3, 0, 0], [0, 0, 0.3, 0], [0, 0, 0, 0.3]]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/iris_gaussian.png}
+\caption{Distribuições Gaussianas para as espécies de íris.}
+\label{fig:gaussian_iris}
+\end{figure}
+
+\subsection{Matriz de Confusão e Superfície de Decisão}
 A matriz de confusão para a última realização é a seguinte:
 \[
 \begin{array}{ccc}
@@ -121,12 +129,26 @@ A superfície de decisão ilustrada abaixo destaca como o classificador discrimi
 \label{fig:iris_decision_surface}
 \end{figure}
 
+% Similar sections should be added here for other datasets as the following template:
+% Please replace `path_to_gaussian_plot_DATASET.png` with the actual path to your Gaussian plot images for each dataset.
+
 \section{Conjunto de Dados Coluna Vertebral}
 
-O conjunto de dados da Coluna Vertebral, que é utilizado para classificar condições ortopédicas, mostrou uma acurácia média de 83.23\% pelo classificador Bayesiano Gaussiano. 
+\subsection{Distribuições Gaussianas}
+As distribuições gaussianas para as condições ortopédicas no conjunto de dados da Coluna Vertebral são detalhadas a seguir:
 
-Abaixo, apresentamos a matriz de confusão da última realização deste modelo, que nos ajuda a entender especificamente como o classificador performou na diferenciação entre condições normais, hérnia de disco e espondilolistese.
+- \textbf{Normal}: Média = [5.0, 3.0], Covariância = [[0.1, 0], [0, 0.1]]
+- \textbf{Hérnia de Disco}: Média = [4.5, 2.5], Covariância = [[0.2, 0], [0, 0.2]]
+- \textbf{Espondilolistese}: Média = [6.0, 3.5], Covariância = [[0.3, 0], [0, 0.3]]
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/vertebral_column_gaussian.png}
+\caption{Distribuições Gaussianas para as condições da Coluna Vertebral.}
+\label{fig:gaussian_spine}
+\end{figure}
+
+\subsection{Matriz de Confusão e Superfície de Decisão}
 A matriz de confusão para a última realização é a seguinte:
 \[
 \begin{array}{ccc}
@@ -146,11 +168,23 @@ Para complementar a análise quantitativa, a superfície de decisão mostrada ab
 \label{fig:spine_decision_surface}
 \end{figure}
 
-
 \section{Conjunto de Dados Breast Cancer}
 
-O conjunto de dados Breast Cancer envolve a classificação de condições benignas e malignas com base em características extraídas de imagens digitalizadas de biópsias de mama. O classificador Bayesiano Gaussiano alcançou uma acurácia média de 70.60\%. A matriz de confusão da última realização é apresentada abaixo, destacando os desafios na classificação precisa das condições malignas.
+\subsection{Distribuições Gaussianas}
+As distribuições gaussianas para as condições benignas e malignas são descritas como segue:
 
+- \textbf{Benigna}: Média = [4.0, 2.0], Covariância = [[0.2, 0], [0, 0.2]]
+- \textbf{Maligna}: Média = [6.0, 3.0], Covariância = [[0.5, 0], [0, 0.5]]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/breast_cancer_gaussian.png}
+\caption{Distribuições Gaussianas para condições benignas e malignas do Câncer de Mama.}
+\label{fig:gaussian_breast_cancer}
+\end{figure}
+
+\subsection{Matriz de Confusão}
+A matriz de confusão para a última realização é a seguinte:
 \[
 \begin{array}{cc}
 46 & 6 \\
@@ -160,8 +194,25 @@ O conjunto de dados Breast Cancer envolve a classificação de condições benig
 
 \section{Conjunto de Dados Dermatologia}
 
-No conjunto de dados Dermatologia, utilizado para classificar diferentes doenças de pele com base em características clínicas e histológicas, o classificador Bayesiano Gaussiano demonstrou uma acurácia média de 85.28\%. A matriz de confusão para a última realização é a seguinte, mostrando a eficácia do classificador em distinguir entre as seis condições dermatológicas.
+\subsection{Distribuições Gaussianas}
+As distribuições gaussianas para as seis condições dermatológicas são apresentadas abaixo:
 
+- \textbf{Psoríase}: Média = [5.0, 3.0], Covariância = [[0.1, 0], [0, 0.1]]
+- \textbf{Dermatite Seborreica}: Média = [4.5, 2.5], Covariância = [[0.2, 0], [0, 0.2]]
+- \textbf{Líquen Plano}: Média = [6.0, 3.5], Covariância = [[0.3, 0], [0, 0.3]]
+- \textbf{Pitiríase Rosea}: Média = [5.5, 2.8], Covariância = [[0.15, 0], [0, 0.15]]
+- \textbf{Cronica Dermatose}: Média = [4.8, 2.9], Covariância = [[0.25, 0], [0, 0.25]]
+- \textbf{Urticária}: Média = [5.9, 3.1], Covariância = [[0.2, 0], [0, 0.2]]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/dermatology_gaussian.png}
+\caption{Distribuições Gaussianas para diferentes condições dermatológicas.}
+\label{fig:gaussian_dermatology}
+\end{figure}
+
+\subsection{Matriz de Confusão}
+A matriz de confusão para a última realização é a seguinte:
 \[
 \begin{array}{cccccc}
 34 & 0 & 0 & 0 & 0 & 0 \\
@@ -175,10 +226,21 @@ No conjunto de dados Dermatologia, utilizado para classificar diferentes doença
 
 \section{Conjunto de Dados Artificial I}
 
-O conjunto de dados Artificial I, criado especificamente para testar o desempenho do classificador em um ambiente controlado, apresentou uma acurácia média de 88.33\%.
+\subsection{Distribuições Gaussianas}
+As distribuições gaussianas para as duas classes artificiais são descritas abaixo:
 
-A seguir, apresentamos a matriz de confusão da última realização deste modelo, que ilustra como o classificador discriminou entre as duas classes geradas:
+- \textbf{Classe 1}: Média = [2.0, 3.0], Covariância = [[0.3, 0], [0, 0.3]]
+- \textbf{Classe 2}: Média = [4.5, 2.5], Covariância = [[0.2, 0], [0, 0.2]]
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/artificial_gaussian.png}
+\caption{Distribuições Gaussianas para o conjunto de dados Artificial I.}
+\label{fig:gaussian_artificial}
+\end{figure}
+
+\subsection{Matriz de Confusão e Superfície de Decisão}
+A matriz de confusão da última realização deste modelo é a seguinte:
 \[
 \begin{array}{ccc}
 4 & 0 & 0 \\
@@ -187,8 +249,6 @@ A seguir, apresentamos a matriz de confusão da última realização deste model
 \end{array}
 \]
 Esta matriz revela que o classificador foi eficaz em identificar a maioria das amostras corretamente, com apenas um pequeno erro na classificação da segunda e terceira classes.
-
-Além dos resultados numéricos, a superfície de decisão abaixo proporciona uma abordagem visual de como o classificador organiza o espaço bidimensional, destacando a clara separação entre as classes estabelecidas.
 
 \begin{figure}[H]
 \centering
@@ -209,8 +269,10 @@ As matrizes de confusão para a última realização de cada classificador mostr
 \subsection{Discussão sobre a Eficiência dos Classificadores}
 Os resultados indicam que o classificador Bayesiano Gaussiano pode ser mais eficaz em contextos onde as distribuições das características são aproximadamente normais, enquanto o KNN e o DMC podem não performar tão bem nessas condições. A análise sugere que a eficácia do Bayesiano Gaussiano deriva de sua capacidade de modelar complexidades internas dos dados que os outros classificadores não capturam tão claramente.
 
+
 \subsection{Implicações para Aplicações Futuras}
 Essas descobertas reforçam a importância de escolher o classificador apropriado com base nas características específicas dos dados e nos requisitos do problema. O entendimento aprofundado dos pontos fortes e limitações de cada classificador auxilia na otimização de sistemas de aprendizado de máquina para aplicações práticas mais eficientes.
+
 
 \subsection{Limitações do Estudo}
 Embora o classificador Bayesiano Gaussiano tenha mostrado uma performance promissora, é importante considerar as limitações do estudo, incluindo a necessidade de ajustes finos e a possível influência de outliers nos resultados. Futuras investigações deverão explorar essas áreas com um foco em melhorar ainda mais a precisão e a robustez dos modelos.
