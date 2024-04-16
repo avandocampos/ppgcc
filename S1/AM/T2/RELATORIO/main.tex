@@ -30,13 +30,12 @@
   \end{minipage}
 
 \vspace{1cm}
-
   \begin{minipage}[t][][t]{5cm}
   \end{minipage}
   \begin{minipage}[t][][t]{14cm}
 	\begin{flushleft}
-   Orientador: Prof. Dr. José Danial\\ 
-   Coorientador: Prof. Dr. Pedro Pedrosa
+   Orientador: Prof. Dr. José Daniel de Alencar Santos\\ 
+   Coorientador: Prof. Dr. Pedro Pedrosa Rebouças Filho
   \end{flushleft}
   \end{minipage}
 
@@ -85,7 +84,7 @@ As ferramentas e linguagens de programação utilizadas incluíram Python e bibl
 
 Esta seção apresenta os resultados obtidos pela aplicação do classificador Bayesiano Gaussiano nos diferentes conjuntos de dados. A eficácia do classificador foi avaliada com base na acurácia média, desvio padrão e matrizes de confusão para cada conjunto.
 
-\section{Procedimento de Avaliação e Justificativa para a Escolha da Última Realização}
+\section{Procedimento de Avaliação}
 
 Para cada um dos conjuntos de dados, o classificador Bayesiano Gaussiano foi executado 20 vezes. Essa abordagem visa garantir a estabilidade e a confiabilidade dos resultados obtidos, permitindo uma avaliação mais robusta das capacidades do classificador em diferentes condições. A acurácia e o desvio padrão foram calculados a partir dessas múltiplas execuções para fornecer uma medida consistente do desempenho.
 
@@ -99,7 +98,9 @@ O conjunto de dados Iris consiste em 150 amostras de três espécies diferentes 
 As distribuições gaussianas calculadas para cada uma das três classes de íris são caracterizadas pelos seguintes vetores de média e matrizes de covariância:
 
 - \textbf{Setosa}: Média = [5.1, 3.5, 1.4, 0.2], Covariância = [[0.1, 0, 0, 0], [0, 0.1, 0, 0], [0, 0, 0.1, 0], [0, 0, 0, 0.1]]
+
 - \textbf{Versicolor}: Média = [6.0, 2.9, 4.5, 1.5], Covariância = [[0.2, 0, 0, 0], [0, 0.2, 0, 0], [0, 0, 0.2, 0], [0, 0, 0, 0.2]]
+
 - \textbf{Virginica}: Média = [6.3, 3.1, 5.6, 2.2], Covariância = [[0.3, 0, 0, 0], [0, 0.3, 0, 0], [0, 0, 0.3, 0], [0, 0, 0, 0.3]]
 
 \begin{figure}[H]
@@ -129,16 +130,15 @@ A superfície de decisão ilustrada abaixo destaca como o classificador discrimi
 \label{fig:iris_decision_surface}
 \end{figure}
 
-% Similar sections should be added here for other datasets as the following template:
-% Please replace `path_to_gaussian_plot_DATASET.png` with the actual path to your Gaussian plot images for each dataset.
-
 \section{Conjunto de Dados Coluna Vertebral}
 
 \subsection{Distribuições Gaussianas}
 As distribuições gaussianas para as condições ortopédicas no conjunto de dados da Coluna Vertebral são detalhadas a seguir:
 
 - \textbf{Normal}: Média = [5.0, 3.0], Covariância = [[0.1, 0], [0, 0.1]]
+
 - \textbf{Hérnia de Disco}: Média = [4.5, 2.5], Covariância = [[0.2, 0], [0, 0.2]]
+
 - \textbf{Espondilolistese}: Média = [6.0, 3.5], Covariância = [[0.3, 0], [0, 0.3]]
 
 \begin{figure}[H]
@@ -174,6 +174,7 @@ Para complementar a análise quantitativa, a superfície de decisão mostrada ab
 As distribuições gaussianas para as condições benignas e malignas são descritas como segue:
 
 - \textbf{Benigna}: Média = [4.0, 2.0], Covariância = [[0.2, 0], [0, 0.2]]
+
 - \textbf{Maligna}: Média = [6.0, 3.0], Covariância = [[0.5, 0], [0, 0.5]]
 
 \begin{figure}[H]
@@ -198,10 +199,15 @@ A matriz de confusão para a última realização é a seguinte:
 As distribuições gaussianas para as seis condições dermatológicas são apresentadas abaixo:
 
 - \textbf{Psoríase}: Média = [5.0, 3.0], Covariância = [[0.1, 0], [0, 0.1]]
+
 - \textbf{Dermatite Seborreica}: Média = [4.5, 2.5], Covariância = [[0.2, 0], [0, 0.2]]
+
 - \textbf{Líquen Plano}: Média = [6.0, 3.5], Covariância = [[0.3, 0], [0, 0.3]]
+
 - \textbf{Pitiríase Rosea}: Média = [5.5, 2.8], Covariância = [[0.15, 0], [0, 0.15]]
+
 - \textbf{Cronica Dermatose}: Média = [4.8, 2.9], Covariância = [[0.25, 0], [0, 0.25]]
+
 - \textbf{Urticária}: Média = [5.9, 3.1], Covariância = [[0.2, 0], [0, 0.2]]
 
 \begin{figure}[H]
