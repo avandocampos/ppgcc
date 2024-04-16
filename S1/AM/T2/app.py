@@ -143,7 +143,7 @@ def plot_gaussians_2d(dataset_loader, feature_indices=(0, 1)):
 
 if __name__ == "__main__":
 
-    """evaluate_dataset(load_iris_uci, "Iris Dataset")
+    evaluate_dataset(load_iris_uci, "Iris Dataset")
     evaluate_dataset(load_vertebral_column_uci, "Vertebral Column Dataset")
     evaluate_dataset(load_breast_cancer_uci, "Breast Cancer Dataset")
     evaluate_dataset(load_dermatology_uci, "Dermatology Dataset")
@@ -163,17 +163,17 @@ if __name__ == "__main__":
         feature_names=["Pelvic Incident", "Pelvic Tilt"],
         class_names=["DH", "SL", "NO"],
         dataset_name="Vertebral Column Dataset"
-    ) """
+    )
 
-    """ plot_decision_surface(
+    plot_decision_surface(
         load_breast_cancer_uci,
         feature_indices=(0, 1),
         feature_names=["Raio Médio", "Textura Média"],
         class_names=["Maligno", "Benigno"],
         dataset_name="Breast Cancer Dataset"
-    ) """
+    )
 
-    """ plot_decision_surface(
+    plot_decision_surface(
         load_dermatology_uci,
         feature_indices=(0, 1),
         feature_names=["Feature 1", "Feature 2"],
@@ -186,8 +186,8 @@ if __name__ == "__main__":
             "Psoríase"
         ],
         dataset_name="Dermatology Dataset"
-    ) """
-    """
+    )
+
     plot_decision_surface(
         generate_artificial_dataset,
         feature_indices=(0, 1),
@@ -195,11 +195,9 @@ if __name__ == "__main__":
         class_names=["1", "2", "3", "4"],
         dataset_name="Artificial I Dataset"
     )
- """
-    """ plot_gaussians(dataset_loader=load_iris_uci, dataset_name="iris")
+ 
+    plot_gaussians(dataset_loader=load_iris_uci, dataset_name="iris")
     plot_gaussians(dataset_loader=load_vertebral_column_uci, dataset_name="vertebral_column")
     plot_gaussians(dataset_loader=load_breast_cancer_uci, dataset_name="breast_cancer")
     plot_gaussians(dataset_loader=load_dermatology_uci, dataset_name="dermatology")
-    plot_gaussians(dataset_loader=generate_artificial_dataset, dataset_name="artificial") """
-
-    plot_gaussians_2d(load_breast_cancer_uci, (2,3))
+    plot_gaussians(dataset_loader=generate_artificial_dataset, dataset_name="artificial")
