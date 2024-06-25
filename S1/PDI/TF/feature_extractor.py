@@ -1,4 +1,3 @@
-
 import numpy as np
 import os
 from tensorflow.keras.applications import VGG16
@@ -18,19 +17,19 @@ def preprocess_image(img_path):
     img_data = preprocess_input(img_data)
     return img_data
 
-# Function to extract features and organize them into a matrix
-def extract_features_to_matrix(directories, labels_map, labels_good_or_not):
-    features = []
+# Function to extract features and organize them into a dictionary
+def extract_features_to_dict(directories, labels_map, labels_good_or_not):
+    features_dict = {label: [] for label in labels_map.values()}
     for label, directory in directories.items():
         for img_name in os.listdir(directory):
             img_path = os.path.join(directory, img_name)
             if os.path.isfile(img_path):
                 img_data = preprocess_image(img_path)
                 vgg16_feature = model.predict(img_data)
-                feature_row = np.append(vgg16_feature.flatten(), labels_map[label])
-                feature_row = np.append(feature_row, labels_good_or_not[label])
-                features.append(feature_row)
-    return np.array(features)
+                feature_row = np.append(vgg16_feature.flatten(), labels_good_or_not[label])
+                features_dict[labels_map[label]].append(feature_row)
+    return features_dict
+
 
 # Define directories and label mapping
 directories = {
@@ -60,11 +59,12 @@ labels_good_or_not = {
     'scratch': 1
 }
 
-# Extract features and organize into a matrix
-features_matrix = extract_features_to_matrix(directories, labels_map, labels_good_or_not)
+# Extract features and organize into a dictionary
+features_dict = extract_features_to_dict(directories, labels_map, labels_good_or_not)
 
-# Export features to a .txt file
-output_file = 'complete_features_matrix_nonbin.txt'
-np.savetxt(output_file, features_matrix, delimiter=',')
+# Export features to separate .txt files per class
+for label, features in features_dict.items():
+    output_file = f'features_matrix_class_{label}_nonbin.txt'
+    np.savetxt(output_file, features, delimiter=',')
 
-print(f"Features and labels have been exported to {output_file}")
+print("Features and labels have been exported to separate files per class.")
