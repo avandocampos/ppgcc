@@ -45,10 +45,10 @@ directories = {
 labels_map = {
     'good': 0,
     'bent': 1,
-    'color': 1,
-    'flip': 1,
-    'good_test': 0,
-    'scratch': 1
+    'color': 2,
+    'flip': 3,
+    'good_test': 4,
+    'scratch': 5
 }
 
 labels_good_or_not = {
