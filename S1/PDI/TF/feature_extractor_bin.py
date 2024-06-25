@@ -26,7 +26,7 @@ def preprocess_image(img):
     return img_data
 
 # Function to extract features and organize them into a matrix
-def extract_features_to_matrix(directories, labels_map):
+def extract_features_to_matrix(directories, labels_map, labels_good_or_not):
     features = []
     for label, directory in directories.items():
         for img_name in os.listdir(directory):
@@ -36,6 +36,7 @@ def extract_features_to_matrix(directories, labels_map):
                 img_data = preprocess_image(binary_img)
                 vgg16_feature = model.predict(img_data)
                 feature_row = np.append(vgg16_feature.flatten(), labels_map[label])
+                feature_row = np.append(feature_row, labels_good_or_not[label])
                 features.append(feature_row)
     return np.array(features)
 
@@ -52,6 +53,15 @@ directories = {
 labels_map = {
     'good': 0,
     'bent': 1,
+    'color': 2,
+    'flip': 3,
+    'good_test': 4,
+    'scratch': 5
+}
+
+labels_good_or_not = {
+    'good': 0,
+    'bent': 1,
     'color': 1,
     'flip': 1,
     'good_test': 0,
@@ -59,10 +69,10 @@ labels_map = {
 }
 
 # Extract features and organize into a matrix
-features_matrix = extract_features_to_matrix(directories, labels_map)
+features_matrix = extract_features_to_matrix(directories, labels_map, labels_good_or_not)
 
 # Export features to a .txt file
-output_file = 'features_matrix_bin.txt'
+output_file = 'complete_features_matrix_bin.txt'
 np.savetxt(output_file, features_matrix, delimiter=',')
 
 print(f"Features and labels have been exported to {output_file}")
