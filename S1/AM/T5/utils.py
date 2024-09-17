@@ -61,44 +61,6 @@ def load_vertebral_column_uci():
     return X, y
 
 
-def load_breast_cancer_uci():
-    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer/breast-cancer.data"
-    column_names = ['class', 'age', 'menopause', 'tumor-size', 'inv-nodes', 'node-caps', 'deg-malig', 'breast', 'breast-quad', 'irradiat']
-    data = pd.read_csv(url, header=None, names=column_names)
-    data = data.replace('?', np.nan)
-    data.dropna(inplace=True)
-
-    # Converter atributos categóricos em numéricos
-    for col in data.columns:
-        if data[col].dtype == 'object':
-            data[col] = data[col].astype('category').cat.codes
-
-    X = data.iloc[:, 1:].values
-    y = data.iloc[:, 0].values
-
-    return X, y
-
-
-def load_dermatology_uci():
-    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/dermatology/dermatology.data"
-    column_names = ['erythema', 'scaling', 'definite_borders', 'itching', 'koebner_phenomenon', 'polygonal_papules',
-                    'follicular_papules', 'oral_mucosal_involvement', 'knee_and_elbow_involvement', 'scalp_involvement',
-                    'family_history', 'melanin_incontinence', 'eosinophils_in_the_infiltrate', 'PNL_infiltrate',
-                    'fibrosis_of_the_papillary_dermis', 'exocytosis', 'acanthosis', 'hyperkeratosis', 'parakeratosis',
-                    'clubbing_of_the_rete_ridges', 'elongation_of_the_rete_ridges', 'thinning_of_the_suprapapillary_epidermis',
-                    'spongiform_pustule', 'munro_microabcess', 'focal_hypergranulosis', 'disappearance_of_the_granular_layer',
-                    'vacuolisation_and_damage_of_basal_layer', 'spongiosis', 'saw_tooth_appearance_of_retes',
-                    'follicular_horn_plug', 'perifollicular_parakeratosis', 'inflammatory_monoluclear_inflitrate',
-                    'band_like_infiltrate', 'age', 'class']
-    data = pd.read_csv(url, header=None, names=column_names, na_values="?")
-    data.dropna(inplace=True)
-
-    X = data.iloc[:, :-1].values
-    y = data.iloc[:, -1].values
-
-    return X, y
-
-
 def generate_artificial_dataset():
     np.random.seed(42)
 
@@ -123,8 +85,6 @@ def generate_artificial_dataset():
 
     return X_artificial, y_artificial
 
-
-# Função para dividir o conjunto de dados em treino e teste
 def train_test_split(X, y, test_size=0.3, random_state=42):
     np.random.seed(random_state)
     indices = np.random.permutation(len(X))
@@ -158,6 +118,8 @@ def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_st
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)
+        classifier.print_covariances(X_train)
+        classifier.print_means()
         accuracy = accuracy_score(y_test, y_pred)
         accuracies.append(accuracy)
         last_conf_matrix = confusion_matrix(y_test, y_pred)

@@ -124,7 +124,6 @@ def generate_artificial_dataset():
     return X_artificial, y_artificial
 
 
-# Função para dividir o conjunto de dados em treino e teste
 def train_test_split(X, y, test_size=0.3, random_state=42):
     np.random.seed(random_state)
     indices = np.random.permutation(len(X))
@@ -133,6 +132,40 @@ def train_test_split(X, y, test_size=0.3, random_state=42):
     train_indices = indices[test_size:]
 
     return X[train_indices], X[test_indices], y[train_indices], y[test_indices]
+
+
+def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_state=42, results_file=None):
+    accuracies = []
+    last_conf_matrix = None
+
+    for i in range(num_trials):
+        # Divisão dos dados em treino e teste
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
+        
+        # Treinamento do classificador
+        classifier.fit(X_train, y_train)
+        
+        # Previsão usando o classificador
+        y_pred = classifier.predict(X_test)
+        
+        # Escreve em arquico os parâmetros dos GMMs
+        if results_file is not None:
+            results_file.write(f"Trial {i+1}:\n")
+            classifier.write_gmm_params(results_file)
+        
+        else:
+            classifier.print_gmm_params()
+        
+        # Calcular acurácia e matriz de confusão sem rejeição de amostras
+        accuracy = accuracy_score(y_test, y_pred)
+        accuracies.append(accuracy)
+        last_conf_matrix = confusion_matrix(y_test, y_pred)
+
+    # Cálculo da média e desvio padrão das acurácias
+    mean_accuracy = np.mean(accuracies)
+    std_accuracy = np.std(accuracies)
+
+    return mean_accuracy, std_accuracy, last_conf_matrix
 
 
 def accuracy_score(y_true, y_pred):
@@ -148,21 +181,3 @@ def confusion_matrix(y_true, y_pred):
             conf_matrix[i, j] = np.sum((y_true == true_class) & (y_pred == pred_class))
 
     return conf_matrix
-
-
-def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_state=42):
-    accuracies = []
-    last_conf_matrix = None
-
-    for i in range(num_trials):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
-        classifier.fit(X_train, y_train)
-        y_pred = classifier.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        accuracies.append(accuracy)
-        last_conf_matrix = confusion_matrix(y_test, y_pred)
-
-    mean_accuracy = np.mean(accuracies)
-    std_accuracy = np.std(accuracies)
-
-    return mean_accuracy, std_accuracy, last_conf_matrix

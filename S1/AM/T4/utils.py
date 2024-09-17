@@ -158,6 +158,8 @@ def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_st
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)
+        classifier.print_covariances()
+        classifier.print_means()
         accuracy = accuracy_score(y_test, y_pred)
         accuracies.append(accuracy)
         last_conf_matrix = confusion_matrix(y_test, y_pred)

@@ -37,3 +37,13 @@ env/
 
 #Other files extensions
 *.data
+*.txt
+*.csv
+*.json
+*.xml
+*.yaml
+*.yml
+*.log
+*.out
+*.html
+*.txt

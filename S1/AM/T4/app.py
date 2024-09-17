@@ -11,13 +11,13 @@ from utils import (
     generate_artificial_dataset,
     holdout_evaluation,
 )
-from classifier import NaiveBayesClassifier
+from classifier import GaussianDiscriminantAnalysis
 
 
-def evaluate_dataset(dataset_loader, dataset_name):
+def evaluate_dataset(dataset_loader, dataset_name, mode='LDA'):
     X, y = dataset_loader()
-    nbc = NaiveBayesClassifier()
-    mean_accuracy, std_accuracy, conf_matrix = holdout_evaluation(X, y, nbc)
+    nbc = GaussianDiscriminantAnalysis(mode=mode)
+    mean_accuracy, std_accuracy, conf_matrix = holdout_evaluation(X, y, nbc, num_trials=1)
     print(f"{dataset_name} - Mean accuracy: {mean_accuracy}, Standard deviation: {std_accuracy}")
     print("Confusion Matrix (last trial):")
     print(conf_matrix)
@@ -27,14 +27,15 @@ def plot_decision_surface(
         dataset_loader, feature_indices=(0, 1),
         feature_names=["Feature 1", "Feature 2"],
         class_names=[],
-        resolution=0.02,
-        dataset_name="Dataset"):
+        resolution=0.1,
+        dataset_name="Dataset",
+        mode='LDA'):
     # Carregar dados
     X, y = dataset_loader()
     X = X[:, list(feature_indices)]  # Seleciona apenas as duas características para visualização
 
     # Inicializar e treinar o classificador
-    classifier = NaiveBayesClassifier()
+    classifier = GaussianDiscriminantAnalysis()
     classifier.fit(X, y)
 
     # Configurar marcadores e cores do mapa
@@ -59,11 +60,11 @@ def plot_decision_surface(
                     alpha=0.8, c=[cmap(idx)],
                     marker=markers[idx], label=class_names[cl])
 
-    plt.title(f'Superfície de decisão para {dataset_name.split(sep=" ")[0]} usando o classificador Naive Bayes')
+    plt.title(f'Superfície de decisão para {dataset_name.split(sep=" ")[0]} usando o classificador Bayesiano Gaussiano {mode}')
     plt.xlabel(feature_names[0])
     plt.ylabel(feature_names[1])
     plt.legend()
-    plt.savefig(f"{dataset_name.lower().split(sep=' ')[0]}_decision_surface.png")
+    plt.savefig(f"{dataset_name.lower().split(sep=' ')[0]}_decision_surface_{mode}.png")
 
 
 def plot_gaussians(dataset_loader, dataset_name=None):
@@ -146,36 +147,46 @@ def plot_gaussians_2d(dataset_loader, feature_indices=(0, 1)):
 
 if __name__ == "__main__":
 
-    evaluate_dataset(load_iris_uci, "Iris Dataset")
-    evaluate_dataset(load_vertebral_column_uci, "Vertebral Column Dataset")
-    evaluate_dataset(load_breast_cancer_uci, "Breast Cancer Dataset")
-    evaluate_dataset(load_dermatology_uci, "Dermatology Dataset")
-    evaluate_dataset(generate_artificial_dataset, "Artificial I Dataset")
+    # evaluate_dataset(load_iris_uci, "Iris Dataset", mode='LDA')
+    
+    # evaluate_dataset(load_vertebral_column_uci, "Vertebral Column Dataset", mode='QDA')
+    
+    evaluate_dataset(load_breast_cancer_uci, "Breast Cancer Dataset", mode='LDA')
+    evaluate_dataset(load_breast_cancer_uci, "Breast Cancer Dataset", mode='QDA')
+    
+    # evaluate_dataset(load_dermatology_uci, "Dermatology Dataset", mode='LDA')
+    # evaluate_dataset(load_dermatology_uci, "Dermatology Dataset", mode='QDA')
+    
+    # evaluate_dataset(generate_artificial_dataset, "Artificial I Dataset", mode='LDA')
 
     """ plot_decision_surface(
         load_iris_uci,
         feature_indices=(0, 1),
         feature_names=["Comprimento da Sépala [cm]", "Largura da Sépala [cm]"],
         class_names=["Setosa", "Versicolor", "Virginica"],
-        dataset_name="Iris Dataset"
-    )
+        dataset_name="Iris Dataset",
+        mode='LDA'
+    ) """
 
-    plot_decision_surface(
+    """ plot_decision_surface(
         load_vertebral_column_uci,
         feature_indices=(0, 1),
         feature_names=["Pelvic Incident", "Pelvic Tilt"],
         class_names=["DH", "SL", "NO"],
-        dataset_name="Vertebral Column Dataset"
-    )
+        dataset_name="Vertebral Column Dataset",
+        mode='QDA'   
+    ) """
 
+    """
     plot_decision_surface(
         load_breast_cancer_uci,
         feature_indices=(0, 1),
         feature_names=["Raio Médio", "Textura Média"],
         class_names=["Maligno", "Benigno"],
         dataset_name="Breast Cancer Dataset"
-    )
+    ) """
 
+    """
     plot_decision_surface(
         load_dermatology_uci,
         feature_indices=(0, 1),
@@ -189,18 +200,22 @@ if __name__ == "__main__":
             "Psoríase"
         ],
         dataset_name="Dermatology Dataset"
-    )
- """
-    """ plot_decision_surface(
+    ) """
+ 
+    """ 
+    plot_decision_surface(
         generate_artificial_dataset,
         feature_indices=(0, 1),
         feature_names=["Feature 1", "Feature 2"],
         class_names=["1", "2", "3", "4"],
-        dataset_name="Artificial I Dataset"
+        dataset_name="Artificial I Dataset",
+        mode='QDA'
     ) """
  
+    """ 
     plot_gaussians(dataset_loader=load_iris_uci, dataset_name="iris")
     plot_gaussians(dataset_loader=load_vertebral_column_uci, dataset_name="vertebral_column")
     plot_gaussians(dataset_loader=load_breast_cancer_uci, dataset_name="breast_cancer")
     plot_gaussians(dataset_loader=load_dermatology_uci, dataset_name="dermatology")
     plot_gaussians(dataset_loader=generate_artificial_dataset, dataset_name="artificial")
+    """

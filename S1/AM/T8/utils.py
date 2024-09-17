@@ -107,24 +107,30 @@ def generate_artificial_dataset():
     cov1 = [[0.1, 0], [0, 0.1]]
     class1 = np.random.multivariate_normal(mean1, cov1, 10)
 
-    # Parâmetros para a Classe 2
+    # Primeiro conjunto de dados para a Classe 0 
     mean2 = [0, 0]
     cov2 = [[0.1, 0], [0, 0.1]]
-    class2 = np.random.multivariate_normal(mean2, cov2, 10)
+    class0_1 = np.random.multivariate_normal(mean2, cov2, 10)
 
-    # Parâmetros para a Classe 3
+    # Segundo conjunto de dados para a Classe 0 
     mean3 = [1, 0]
     cov3 = [[0.1, 0], [0, 0.1]]
-    class3 = np.random.multivariate_normal(mean3, cov3, 10)
+    class0_2 = np.random.multivariate_normal(mean3, cov3, 10)
+
+    # Terceiro conjunto de dados para a Classe 0 
+    mean4 = [0, 1]
+    cov4 = [[0.1, 0], [0, 0.1]]
+    class0_3 = np.random.multivariate_normal(mean4, cov4, 10)
+
+    class0 = np.vstack((class0_1, class0_2, class0_3))
 
     # Combinar as classes
-    X_artificial = np.vstack((class1, class2, class3))
-    y_artificial = np.array([1]*10 + [2]*10 + [3]*10)
+    X_artificial = np.vstack((class1, class0))
+    y_artificial = np.array([1]*10 + [0]*30)
 
     return X_artificial, y_artificial
 
 
-# Função para dividir o conjunto de dados em treino e teste
 def train_test_split(X, y, test_size=0.3, random_state=42):
     np.random.seed(random_state)
     indices = np.random.permutation(len(X))
@@ -133,6 +139,40 @@ def train_test_split(X, y, test_size=0.3, random_state=42):
     train_indices = indices[test_size:]
 
     return X[train_indices], X[test_indices], y[train_indices], y[test_indices]
+
+
+def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_state=42, results_file=None):
+    accuracies = []
+    last_conf_matrix = None
+
+    for i in range(num_trials):
+        # Divisão dos dados em treino e teste
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
+        
+        # Treinamento do classificador
+        classifier.fit(X_train, y_train)
+        
+        # Previsão usando o classificador
+        y_pred = classifier.predict(X_test)
+        
+        # Escreve em arquico os parâmetros dos GMMs
+        if results_file is not None:
+            results_file.write(f"Trial {i+1}:\n")
+            classifier.write_parzen_params(results_file)
+        
+        else:
+            classifier.print_parzen_params()
+        
+        # Calcular acurácia e matriz de confusão sem rejeição de amostras
+        accuracy = accuracy_score(y_test, y_pred)
+        accuracies.append(accuracy)
+        last_conf_matrix = confusion_matrix(y_test, y_pred)
+
+    # Cálculo da média e desvio padrão das acurácias
+    mean_accuracy = np.mean(accuracies)
+    std_accuracy = np.std(accuracies)
+
+    return mean_accuracy, std_accuracy, last_conf_matrix
 
 
 def accuracy_score(y_true, y_pred):
@@ -149,20 +189,3 @@ def confusion_matrix(y_true, y_pred):
 
     return conf_matrix
 
-
-def holdout_evaluation(X, y, classifier, num_trials=20, test_size=0.3, random_state=42):
-    accuracies = []
-    last_conf_matrix = None
-
-    for i in range(num_trials):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state+i)
-        classifier.fit(X_train, y_train)
-        y_pred = classifier.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        accuracies.append(accuracy)
-        last_conf_matrix = confusion_matrix(y_test, y_pred)
-
-    mean_accuracy = np.mean(accuracies)
-    std_accuracy = np.std(accuracies)
-
-    return mean_accuracy, std_accuracy, last_conf_matrix
